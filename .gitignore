@@ -1,0 +1,26 @@
+# Binaries
+/chargpt
+/bin/
+*.exe
+
+# Training data / checkpoints
+input.txt
+*.npy
+*.bin
+*.ckpt
+checkpoints/
+
+# BPE vocab files (download separately)
+vocab.json
+merges.txt
+
+# Go tooling
+*.test
+*.out
+coverage.*
+
+# Editors / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
