@@ -18,8 +18,11 @@ type CausalSelfAttention struct {
 	AttnDrop *nn.Dropout
 	ResidDrop *nn.Dropout
 
-	// Pre-allocated causal mask [BlockSize, BlockSize]: 1 where attention is allowed.
+	// Full causal mask [BlockSize, BlockSize]: 1 where attention is allowed.
 	causalMask *tensor.Tensor
+	// Cached per-T sub-masks, keyed by sequence length. Training uses a fixed
+	// T every iteration so the cache fills immediately after the first batch.
+	maskCache map[int]*tensor.Tensor
 }
 
 // NewCausalSelfAttention creates the attention layer.
@@ -33,7 +36,11 @@ func NewCausalSelfAttention(cfg GPTConfig, std float32) *CausalSelfAttention {
 		AttnDrop:  nn.NewDropout(cfg.AttnDrop),
 		ResidDrop: nn.NewDropout(cfg.ResidDrop),
 		causalMask: buildLowerTriangularMask(cfg.BlockSize),
+		maskCache:  make(map[int]*tensor.Tensor),
 	}
+	// Seed the cache with the full-size mask so training (which uses BlockSize
+	// every iter) never touches the slow path.
+	a.maskCache[cfg.BlockSize] = a.causalMask
 	return a
 }
 
@@ -48,19 +55,20 @@ func buildLowerTriangularMask(T int) *tensor.Tensor {
 	return m
 }
 
-// sliceMask returns the [T,T] sub-mask (shared slice, no copy).
+// sliceMask returns the [T,T] causal sub-mask. Cached per T so the second and
+// subsequent calls for a given sequence length allocate nothing. For T less
+// than BlockSize the first call materialises a copy because rows of the
+// [BlockSize,BlockSize] mask are not contiguous for a smaller stride.
 func (a *CausalSelfAttention) sliceMask(T int) *tensor.Tensor {
-	full := a.cfg.BlockSize
-	if T == full {
-		return a.causalMask
+	if m, ok := a.maskCache[T]; ok {
+		return m
 	}
-	// Return a new tensor view over the top-left T×T sub-block.
-	// Because the mask is row-major [full, full], rows are not contiguous for T < full,
-	// so we must copy.
+	full := a.cfg.BlockSize
 	m := tensor.Zeros(T, T)
 	for i := 0; i < T; i++ {
 		copy(m.Data[i*T:(i+1)*T], a.causalMask.Data[i*full:i*full+T])
 	}
+	a.maskCache[T] = m
 	return m
 }
 

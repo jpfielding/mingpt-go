@@ -27,7 +27,8 @@ no external numeric libraries** — everything is stdlib Go and `float32` slices
 # Grab Tiny Shakespeare
 curl -LO https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt
 
-# Train a nano-GPT for 2000 iters, generating samples every 500
+# Train a nano-GPT for 2000 iters, generating samples every 500, and save the
+# final weights to disk
 go run ./cmd/chargpt \
   -input input.txt \
   -model gpt-nano \
@@ -36,7 +37,15 @@ go run ./cmd/chargpt \
   -batch_size 32 \
   -lr 5e-4 \
   -gen_every 500 \
-  -prompt "O God, O God!"
+  -prompt "O God, O God!" \
+  -save ckpt.gob
+
+# Resume from the saved checkpoint and train for another 2000 iters
+go run ./cmd/chargpt \
+  -input input.txt \
+  -load ckpt.gob \
+  -max_iters 2000 \
+  -save ckpt.gob
 ```
 
 Expected: loss drops from ~4.2 → ~2.5 on `gpt-nano` (94k params) in a couple
@@ -70,6 +79,16 @@ go test ./...
 The autograd suite covers: `Add`, `MatMul`, `GELU`, `Softmax`, `LayerNorm`,
 `Embedding`, `CrossEntropy`, `Dropout`, and `MaskedFillNegInf`. Relative errors
 stay below `1e-3`.
+
+There's also a convergence test — `trainer.TestTrainerConverges` runs
+`gpt-nano` on the digit-sort toy task from karpathy's demo notebook and fails
+the build if loss hasn't dropped well below the random-uniform baseline.
+
+Benchmarks for matmul and full GPT forward/backward live alongside the tests:
+
+```bash
+go test -bench=. -benchtime=3x -run=^$ ./tensor ./model
+```
 
 ## Presets
 

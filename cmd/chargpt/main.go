@@ -28,6 +28,8 @@ func main() {
 	genLen := flag.Int("gen_len", 500, "number of tokens to generate")
 	genPrompt := flag.String("prompt", "O God, O God!", "generation prompt")
 	seed := flag.Int64("seed", 3407, "random seed")
+	saveCkpt := flag.String("save", "", "write final checkpoint to this path (empty = disabled)")
+	loadCkpt := flag.String("load", "", "resume from checkpoint at this path (empty = fresh init)")
 	flag.Parse()
 
 	// Seed the shared RNG used for weight init and dropout.
@@ -46,15 +48,25 @@ func main() {
 	fmt.Printf("corpus: %d chars | vocab: %d | dataset: %d samples\n",
 		len(raw), tok.VocabSize(), ds.Len())
 
-	// Build model.
-	cfg := model.Preset(*modelType)
-	cfg.VocabSize = tok.VocabSize()
-	cfg.BlockSize = *blockSize
-	cfg.EmbdDrop = 0.1
-	cfg.ResidDrop = 0.1
-	cfg.AttnDrop = 0.1
-	gpt := model.NewGPT(cfg)
-	fmt.Printf("model: %s | params: %d\n", *modelType, gpt.NumParams())
+	// Build or load model.
+	var gpt *model.GPT
+	if *loadCkpt != "" {
+		var err error
+		gpt, err = model.LoadGPT(*loadCkpt)
+		if err != nil {
+			log.Fatalf("load checkpoint: %v", err)
+		}
+		fmt.Printf("resumed: %s | params: %d\n", *loadCkpt, gpt.NumParams())
+	} else {
+		cfg := model.Preset(*modelType)
+		cfg.VocabSize = tok.VocabSize()
+		cfg.BlockSize = *blockSize
+		cfg.EmbdDrop = 0.1
+		cfg.ResidDrop = 0.1
+		cfg.AttnDrop = 0.1
+		gpt = model.NewGPT(cfg)
+		fmt.Printf("model: %s | params: %d\n", *modelType, gpt.NumParams())
+	}
 
 	// Build trainer.
 	trCfg := trainer.DefaultConfig()
@@ -78,4 +90,11 @@ func main() {
 	tr.Run()
 
 	fmt.Printf("\nfinal loss: %.4f\n", tr.LastLoss)
+
+	if *saveCkpt != "" {
+		if err := gpt.Save(*saveCkpt); err != nil {
+			log.Fatalf("save checkpoint: %v", err)
+		}
+		fmt.Printf("saved checkpoint: %s\n", *saveCkpt)
+	}
 }
