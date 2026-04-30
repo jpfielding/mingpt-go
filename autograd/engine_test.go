@@ -5,7 +5,7 @@ import (
 	"math/rand"
 	"testing"
 
-	"github.com/fieldingj/mingpt/tensor"
+	"github.com/jpfielding/mingpt/tensor"
 )
 
 // gradCheck verifies analytical gradient against numerical central differences.

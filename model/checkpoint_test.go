@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/fieldingj/mingpt/autograd"
-	"github.com/fieldingj/mingpt/nn"
+	"github.com/jpfielding/mingpt/autograd"
+	"github.com/jpfielding/mingpt/nn"
 )
 
 func TestCheckpointRoundTrip(t *testing.T) {

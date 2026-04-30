@@ -4,8 +4,8 @@ import (
 	"math"
 	"testing"
 
-	"github.com/fieldingj/mingpt/autograd"
-	"github.com/fieldingj/mingpt/tensor"
+	"github.com/jpfielding/mingpt/autograd"
+	"github.com/jpfielding/mingpt/tensor"
 )
 
 // TestAdamWMinimisesQuadratic descends on f(x) = (x-3)^2; the minimum is at x=3.

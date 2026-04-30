@@ -1,8 +1,8 @@
 package nn
 
 import (
-	"github.com/fieldingj/mingpt/autograd"
-	"github.com/fieldingj/mingpt/tensor"
+	"github.com/jpfielding/mingpt/autograd"
+	"github.com/jpfielding/mingpt/tensor"
 )
 
 // Embedding is a lookup table mapping integer IDs to dense vectors.

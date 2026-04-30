@@ -1,3 +1,3 @@
-module github.com/fieldingj/mingpt
+module github.com/jpfielding/mingpt
 
 go 1.26

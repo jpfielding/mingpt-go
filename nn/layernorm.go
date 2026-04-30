@@ -1,8 +1,8 @@
 package nn
 
 import (
-	"github.com/fieldingj/mingpt/autograd"
-	"github.com/fieldingj/mingpt/tensor"
+	"github.com/jpfielding/mingpt/autograd"
+	"github.com/jpfielding/mingpt/tensor"
 )
 
 // LayerNorm applies layer normalisation over the last dimension.

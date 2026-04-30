@@ -5,9 +5,9 @@ import (
 	"math"
 	"math/rand"
 
-	"github.com/fieldingj/mingpt/autograd"
-	"github.com/fieldingj/mingpt/nn"
-	"github.com/fieldingj/mingpt/optim"
+	"github.com/jpfielding/mingpt/autograd"
+	"github.com/jpfielding/mingpt/nn"
+	"github.com/jpfielding/mingpt/optim"
 )
 
 // GPT is the complete transformer language model.

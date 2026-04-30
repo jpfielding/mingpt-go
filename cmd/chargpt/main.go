@@ -11,10 +11,10 @@ import (
 	"math/rand"
 	"os"
 
-	"github.com/fieldingj/mingpt/model"
-	"github.com/fieldingj/mingpt/nn"
-	"github.com/fieldingj/mingpt/tokenizer"
-	"github.com/fieldingj/mingpt/trainer"
+	"github.com/jpfielding/mingpt/model"
+	"github.com/jpfielding/mingpt/nn"
+	"github.com/jpfielding/mingpt/tokenizer"
+	"github.com/jpfielding/mingpt/trainer"
 )
 
 func main() {

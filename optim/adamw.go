@@ -3,7 +3,7 @@ package optim
 import (
 	"math"
 
-	"github.com/fieldingj/mingpt/autograd"
+	"github.com/jpfielding/mingpt/autograd"
 )
 
 // ParamGroup is a set of parameters with shared optimizer hyperparameters.

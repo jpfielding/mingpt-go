@@ -1,7 +1,7 @@
 # minGPT-go
 
 [![ci](https://github.com/jpfielding/mingpt-go/actions/workflows/ci.yml/badge.svg)](https://github.com/jpfielding/mingpt-go/actions/workflows/ci.yml)
-[![Go Reference](https://pkg.go.dev/badge/github.com/fieldingj/mingpt.svg)](https://pkg.go.dev/github.com/fieldingj/mingpt)
+[![Go Reference](https://pkg.go.dev/badge/github.com/jpfielding/mingpt.svg)](https://pkg.go.dev/github.com/jpfielding/mingpt)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 A pure-Go port of Andrej Karpathy's [minGPT](https://github.com/karpathy/minGPT).
@@ -12,7 +12,7 @@ AdamW, BPE tokenizer, and all — with nothing but the Go standard library.
 tape-based autograd engine, start to finish.
 
 ```
-go get github.com/fieldingj/mingpt
+go get github.com/jpfielding/mingpt
 ```
 
 ---
@@ -117,7 +117,7 @@ cmd/chargpt
 ### Tensors
 
 ```go
-import "github.com/fieldingj/mingpt/tensor"
+import "github.com/jpfielding/mingpt/tensor"
 
 a := tensor.RandNorm(rng, 0.02, 4, 8)     // [4,8] Gaussian
 b := tensor.Ones(8, 3)                    // [8,3] all-ones
@@ -131,7 +131,7 @@ d := tensor.ElemAdd(c, bias)              // [4,3] + [1,3] -> [4,3]
 ### Autograd
 
 ```go
-import "github.com/fieldingj/mingpt/autograd"
+import "github.com/jpfielding/mingpt/autograd"
 
 // Parameters are leaf nodes.
 w := autograd.Param(tensor.RandNorm(rng, 0.02, 4, 4))
@@ -154,7 +154,7 @@ reverse calling each closure.
 ### Modules
 
 ```go
-import "github.com/fieldingj/mingpt/nn"
+import "github.com/jpfielding/mingpt/nn"
 
 nn.RNG = rand.New(rand.NewSource(42))     // set before constructing layers
 lin := nn.NewLinear(128, 64, true, 0.02)  // 128->64 with bias, std=0.02
@@ -168,7 +168,7 @@ params := lin.Parameters()                // []*autograd.Node
 ### A full GPT
 
 ```go
-import "github.com/fieldingj/mingpt/model"
+import "github.com/jpfielding/mingpt/model"
 
 cfg := model.GPTMini                      // 6 layers, 6 heads, embd=192
 cfg.VocabSize = 50257
@@ -185,7 +185,7 @@ out := gpt.Generate(promptIDs, 200, 1.0, 40, rng)  // temp=1, top-k=40
 ### Training loop
 
 ```go
-import "github.com/fieldingj/mingpt/trainer"
+import "github.com/jpfielding/mingpt/trainer"
 
 trCfg := trainer.DefaultConfig()
 trCfg.MaxIters  = 5000
@@ -320,7 +320,7 @@ welcome if you want to dig in.
 ## Project layout
 
 ```
-github.com/fieldingj/mingpt/
+github.com/jpfielding/mingpt/
 ├── tensor/          Tensor type + non-differentiable ops
 │   ├── tensor.go    Tensor, constructors, reshape, transpose
 │   └── ops.go       ElemAdd/Sub/Mul/Div, MatMul, SumAxis, broadcasting

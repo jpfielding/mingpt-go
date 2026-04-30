@@ -4,7 +4,7 @@ import (
 	"math"
 	"math/rand"
 
-	"github.com/fieldingj/mingpt/tensor"
+	"github.com/jpfielding/mingpt/tensor"
 )
 
 // ---- Transpose ----

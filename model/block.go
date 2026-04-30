@@ -3,8 +3,8 @@ package model
 import (
 	"math"
 
-	"github.com/fieldingj/mingpt/autograd"
-	"github.com/fieldingj/mingpt/nn"
+	"github.com/jpfielding/mingpt/autograd"
+	"github.com/jpfielding/mingpt/nn"
 )
 
 // Block is a single transformer layer: LN → Attn → residual + LN → FFN → residual.
