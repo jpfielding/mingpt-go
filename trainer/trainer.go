@@ -5,9 +5,9 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/fieldingj/mingpt/autograd"
-	"github.com/fieldingj/mingpt/model"
-	"github.com/fieldingj/mingpt/optim"
+	"github.com/jpfielding/mingpt/autograd"
+	"github.com/jpfielding/mingpt/model"
+	"github.com/jpfielding/mingpt/optim"
 )
 
 // Dataset provides batches of (inputs, targets) token ID slices.

@@ -1,7 +1,7 @@
 package nn
 
 import (
-	"github.com/fieldingj/mingpt/autograd"
+	"github.com/jpfielding/mingpt/autograd"
 )
 
 // Dropout applies inverted dropout during training.

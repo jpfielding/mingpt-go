@@ -4,9 +4,9 @@ import (
 	"math/rand"
 	"testing"
 
-	"github.com/fieldingj/mingpt/autograd"
-	"github.com/fieldingj/mingpt/nn"
-	"github.com/fieldingj/mingpt/tensor"
+	"github.com/jpfielding/mingpt/autograd"
+	"github.com/jpfielding/mingpt/nn"
+	"github.com/jpfielding/mingpt/tensor"
 )
 
 func init() {

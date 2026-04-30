@@ -4,8 +4,8 @@ import (
 	"math/rand"
 	"testing"
 
-	"github.com/fieldingj/mingpt/model"
-	"github.com/fieldingj/mingpt/nn"
+	"github.com/jpfielding/mingpt/model"
+	"github.com/jpfielding/mingpt/nn"
 )
 
 // sortDataset implements the classic "sort digits" toy task from

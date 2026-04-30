@@ -1,6 +1,6 @@
 package autograd
 
-import "github.com/fieldingj/mingpt/tensor"
+import "github.com/jpfielding/mingpt/tensor"
 
 // Node is a value in the computation graph.
 // It carries the forward result (Value) and accumulates gradients (Grad).

@@ -3,7 +3,7 @@ package nn
 import (
 	"math/rand"
 
-	"github.com/fieldingj/mingpt/autograd"
+	"github.com/jpfielding/mingpt/autograd"
 )
 
 // Module is the interface every layer implements.
